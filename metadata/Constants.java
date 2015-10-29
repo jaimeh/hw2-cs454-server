@@ -15,6 +15,8 @@ public class Constants {
     public final static short SMSG_CHAT = 212;
     public final static short CMSG_MESSAGE = 115;
     public final static short SMSG_MESSAGE = 215;
+    public final static short CMSG_CHECK_MESSAGE = 116;
+    public final static short SMSG_CHECK_MESSAGE = 216;
     public final static short CMSG_HEARTBEAT = 113;
     public final static short SMSG_HEARTBEAT = 213;
     public final static short CMSG_SAVE_EXIT_GAME = 119;

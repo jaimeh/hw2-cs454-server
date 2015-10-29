@@ -54,12 +54,29 @@ public class GameDB {
 		executeUpdate(add);	
 	}
 	
+	public void sendMessage(String f, String t, String m){
+		
+		String add = "INSERT INTO private_messages (fromUser, toUser, message)"
+				+ "VALUES ('"+f+"','"+t+"','"+m+"')";
+		
+		executeUpdate(add);	
+	}
+	
 	public ArrayList<String> retrieveChat(){
 		
 		boolean login = false;
 		String retrieve = "SELECT * from chat";
 		
 		return executeChatQuery(retrieve);
+		
+	}
+	
+	public ArrayList<String> retrieveMessages(String u){
+		
+		
+		String retrieve = "SELECT * from private_messages WHERE toUser ='"+u+"'";
+		
+		return executeMessageQuery(retrieve);
 		
 	}
 	
@@ -102,6 +119,45 @@ public class GameDB {
 			e.printStackTrace();
 			
 		}//End of outer try catch		
+	}
+	
+	public ArrayList<String> executeMessageQuery(String command){
+		ArrayList<String> query = new ArrayList<String>();
+		try {
+
+			connection();
+			    
+			Statement stmt = connection.createStatement();
+			
+		    try{
+		    	
+		    	ResultSet emp = stmt.executeQuery(command);
+		    	System.out.println("process successfully!");
+		    	
+		    	while(emp.next()){
+					
+					String fromUser = emp.getString("fromUser");
+					String message = emp.getString("message");
+					
+					
+					String row = fromUser +" : "+ message;
+					query.add(row);
+					//System.out.println(row);
+		    	}
+
+				
+		    }
+		    catch(SQLException s){
+		    	System.out.println("Process unsuccessful!");
+		    	s.printStackTrace();
+		    }//End of inner try catch
+		    connection.close();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			
+		}//End of outer try catch	
+		return query;
 	}
 	
 	public ArrayList<String> executeChatQuery(String command){

@@ -24,6 +24,8 @@ public class GameRequestTable {
         add(Constants.CMSG_AUTH, "RequestLogin");
         add(Constants.CMSG_REGISTER, "RequestRegister");
         add(Constants.CMSG_CHAT, "RequestChat");
+        add(Constants.CMSG_MESSAGE, "RequestMessage");
+        add(Constants.CMSG_CHECK_MESSAGE, "RequestCheckMessage");
         add(Constants.CMSG_HEARTBEAT, "RequestHeartbeat");
      /*   add(Constants.CMSG_SAVE_EXIT_GAME, "RequestExitGame");*/
         add(Constants.RAND_INT, "RequestInt");
