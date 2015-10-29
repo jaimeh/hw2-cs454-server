@@ -5,12 +5,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class GameDB {
 	
 	private String url = "jdbc:mysql://localhost:3306/game_db";
 	private String db_username = "root";
-	private String db_password = "jh204060";
+	private String db_password = "";
 	private Connection connection = null;
 	private String user;
 	private String password;
@@ -42,6 +43,23 @@ public class GameDB {
 				+ "VALUES ('"+u+"','"+pw+"')";
 		
 		executeUpdate(add);
+		
+	}
+	
+	public void chat(String u, String m){
+		
+		String add = "INSERT INTO chat (user, message)"
+				+ "VALUES ('"+u+"','"+m+"')";
+		
+		executeUpdate(add);	
+	}
+	
+	public ArrayList<String> retrieveChat(){
+		
+		boolean login = false;
+		String retrieve = "SELECT * from chat";
+		
+		return executeChatQuery(retrieve);
 		
 	}
 	
@@ -85,6 +103,46 @@ public class GameDB {
 			
 		}//End of outer try catch		
 	}
+	
+	public ArrayList<String> executeChatQuery(String command){
+		ArrayList<String> query = new ArrayList<String>();
+		try {
+
+			connection();
+			    
+			Statement stmt = connection.createStatement();
+			
+		    try{
+		    	
+		    	ResultSet emp = stmt.executeQuery(command);
+		    	System.out.println("process successfully!");
+		    	
+		    	while(emp.next()){
+					
+					String username = emp.getString("user");
+					String message = emp.getString("message");
+					
+					
+					String row = username +" : "+ message;
+					query.add(row);
+					//System.out.println(row);
+		    	}
+
+				
+		    }
+		    catch(SQLException s){
+		    	System.out.println("Process unsuccessful!");
+		    	s.printStackTrace();
+		    }//End of inner try catch
+		    connection.close();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			
+		}//End of outer try catch	
+		return query;
+	}
+	
 	
 	public boolean executeQuery(String command){
 		boolean value = false;
